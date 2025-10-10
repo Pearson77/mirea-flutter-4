@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyWidget(),
     );
   }
@@ -24,8 +25,66 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
+  int counter = 0;
+
+  void increment () {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void hugeIncrement() {
+    setState(() {
+      counter += 10;
+    });
+  }
+
+  void reset () {
+    setState(() {
+      counter = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: Text("Практика №4")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Товаров в корзине: $counter",
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(height: 20),
+            Container(
+              height: 300,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.indigoAccent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: increment,
+                    onLongPress: hugeIncrement,
+                    child: Text("+", style: TextStyle(fontSize: 16)),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: reset,
+                    child: Text("-", style: TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
+            ),
+            
+          ],
+        ),
+      ),
+    );
   }
 }
